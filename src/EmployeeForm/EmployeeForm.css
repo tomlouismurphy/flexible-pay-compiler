@@ -1,0 +1,44 @@
+.formContainer {
+	text-align: left;
+}
+
+.payslipInformation {
+	text-align: left;
+	display: inline;
+}
+
+.payslipTidbit {
+	font-size: 24px;
+	margin-left: 10px;
+	display: inline-block;
+	float: left;
+	clear: left;
+	width: 250px;
+}
+
+.inputBox {
+	display: inline-block;
+	float: left;
+	margin-top: 0px;
+	margin-bottom: 20px;
+	margin-left: 20px;
+	height: 30px;
+	width: 250px;
+	font-size: 16px;
+	text-align: right;
+}
+
+.submitButton {
+	float: left;
+	clear: left;
+	height: 40px;
+	width: 100px;
+	margin-top: 20px;
+	margin-left: 50px;
+	margin-bottom: 50px;
+	background-color: #ff4638;
+	color: white;
+	font-size: 20px;
+	font-weight: bold;
+	border-radius: 10px;
+}
