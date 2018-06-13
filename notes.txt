@@ -1,0 +1,6 @@
+what I need to solve for pay period calculation
+
+-different lengths of months
+-leap years
+-pay periods in different years
+-pay periods in different months
