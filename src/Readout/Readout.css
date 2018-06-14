@@ -1,4 +1,6 @@
 .read-container {
 	clear: left;
 	float: left;
+	width: 100% !important;
+	background: linear-gradient(to right, white, gray);
 }

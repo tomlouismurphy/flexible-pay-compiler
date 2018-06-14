@@ -56,8 +56,8 @@ export class EmployeeForm extends Component {
       <div className="overall">
         <div className="formContainer">
           <form className="payslipInformation">
-            <label className="payslipTidbit">First Name:</label>
-            <input className="inputBox" type="text" name="firstName" onChange={this.handleInput}/>
+            <label className="payslipTidbit" id="firstPositionTidbit">First Name:</label>
+            <input className="inputBox" id="firstPositionInput" type="text" name="firstName" onChange={this.handleInput}/>
             <br/>
             <label className="payslipTidbit">Last Name:</label>
             <input className="inputBox" type="text" name="lastName" onChange={this.handleInput}/>

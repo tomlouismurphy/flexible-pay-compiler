@@ -1,5 +1,12 @@
+.overall {
+	height: 80vh;
+	border: black 2px solid;
+}
+
 .formContainer {
 	text-align: left;
+	background: linear-gradient(to right, white, gray);
+	height: 70vh;
 }
 
 .payslipInformation {
@@ -8,12 +15,13 @@
 }
 
 .payslipTidbit {
-	font-size: 24px;
+	font-size: 20px;
 	margin-left: 10px;
 	display: inline-block;
 	float: left;
 	clear: left;
-	width: 250px;
+	width: 45vw;
+	height: 8vh;
 }
 
 .inputBox {
@@ -23,7 +31,7 @@
 	margin-bottom: 20px;
 	margin-left: 20px;
 	height: 30px;
-	width: 250px;
+	width: 45vw;
 	font-size: 16px;
 	text-align: right;
 }
@@ -41,4 +49,24 @@
 	font-size: 20px;
 	font-weight: bold;
 	border-radius: 10px;
+}
+
+#firstPositionTidbit {
+	margin-top: 10px;
+}
+
+#firstPositionInput {
+	margin-top: 10px;
+}
+
+@media (min-width: 800px) {
+	.inputBox {
+		width: 400px;
+	}
+}
+
+@media (max-height: 580px) {
+	.inputBox {
+		height: 20px;
+	}
 }

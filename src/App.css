@@ -1,12 +1,17 @@
+body > #root > div {
+  height: 100vh;
+}
+
 .container {
   text-align: center;
 }
 
 .main-header {
-  background-color: #222;
+  background-color: white;
   height: 150px;
   padding: 20px;
-  color: white;
+  color: black;
+  height: 10vh;
 }
 
 .classification {
@@ -15,7 +20,14 @@
 
 .instruction-text {
   text-align: center;
-  margin-top: 25px;
-  margin-left: 35px;
-  margin-right: 35px;
+  padding-top: 5px;
+  padding-left: 30px;
+  padding-right: 30px;
+  margin-left: 10px;
+  margin-right: 10px;
+  height: 8vh;
+  font-size: 14px;
+  border: solid 2px #cccccc;
+  background-color: #555555;
+  color: white;
 }
