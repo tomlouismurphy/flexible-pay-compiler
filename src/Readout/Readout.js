@@ -16,7 +16,7 @@ export class Readout extends Component {
   //Note: this assumes pay can be prorated, 
   //and that a person receives an equal portion of their monthly pay
   //each day of the month
-  payPeriodLength = (x) => {
+  payPeriodLength = () => {
     let monthLength = 0;
     let carryoverDays = 0;
     let payPeriodDays = 0;
@@ -31,7 +31,6 @@ export class Readout extends Component {
     for (let i = 0; i < paymentEndArray.length; i++){
       paymentEndArray[i] = parseFloat(paymentEndArray[i]);
     }
-    console.log(paymentEndArray[1] - 3);
     const initialMonth = paymentStartArray[1];
     const finalMonth = paymentEndArray[1];
     let daysInitialMonth = 0;
@@ -75,18 +74,19 @@ export class Readout extends Component {
     //mutates end date data so that we can calculate
     //total number of months that are spanned
     if (paymentEndArray[0] > paymentStartArray[0]){
-      const yearDif = paymentEndArray - paymentStartArray;
+      const yearDif = paymentEndArray[0] - paymentStartArray[0];
       paymentEndArray[1] = paymentEndArray[1] + (yearDif * 12);
     }
-    if (paymentEndArray[1] < paymentStartArray[1] || paymentEndArray[0] < paymentStartArray[0] || paymentEndArray[2] < paymentStartArray[2]){
+    if (paymentEndArray[1] < paymentStartArray[1] || paymentEndArray[0] < paymentStartArray[0]){
       window.alert("Error: Please ensure your start and end dates are correct.")
     }
     //Calculations start here
+    //Assuming that all pay periods are inclusive of start and end days
     //Calculation if pay period is within one calendar month
     console.log(paymentStartArray[1]);
     console.log(paymentEndArray[1]);
     if (paymentStartArray[1] === paymentEndArray[1]){
-      payPeriodDays = paymentEndArray[2] - paymentStartArray[2];
+      payPeriodDays = paymentEndArray[2] - paymentStartArray[2] + 1;
       payPeriodMonths = payPeriodDays/daysInitialMonth;
       payPeriodMonths = parseFloat(payPeriodMonths.toPrecision(4));
       const state = this.state;
@@ -116,14 +116,52 @@ export class Readout extends Component {
     }
   }
   grossCalculator = () => {
-
+    const state = this.state;
+    state.grossIncome = (this.props.annualSalary * state.payPeriod/12).toFixed(2);
+    this.setState(state);
+    console.log(this.state.grossIncome);
+  }
+  incomeTaxCalculator = () => {
+    const state = this.state;
+    const salary = this.props.annualSalary;
+    if (salary < 18201){
+      state.incomeTax = 0;
+      this.setState(state);
+    } else if (salary < 37001){
+      const taxableSalary = salary - 18200;
+      state.incomeTax = (taxableSalary * 0.19 * state.payPeriod/12).toFixed(2);
+      this.setState(state);
+    } else if (salary < 87001){
+      const taxableSalary = salary - 37000;
+      state.incomeTax = ((3572 + taxableSalary * 0.325) * state.payPeriod/12).toFixed(2);
+      this.setState(state);
+      console.log(this.state.incomeTax);
+    } else if (salary < 180001){
+      const taxableSalary = salary - 87000;
+      state.incomeTax = ((19822 + taxableSalary * 0.37) * state.payPeriod/12).toFixed(2);
+      this.setState(state);
+    } else {
+      const taxableSalary = salary - 180000;
+      state.incomeTax = ((54232 + taxableSalary * 0.45) * state.payPeriod/12).toFixed(2);
+      this.setState(state);
+    }
   }
   render() {
     let paystubData = this.state.payPeriod;
     return (
       <div className="read-container">
         <button onClick={this.payPeriodLength}>
-        Placeholder.
+        Pay Period
+        </button>
+        <br/>
+        <br/>
+        <button onClick={this.grossCalculator}>
+        Calculate Gross Income
+        </button>
+        <br/>
+        <br/>
+        <button onClick={this.incomeTaxCalculator}>
+        Calculate Tax
         </button>
         <p>{paystubData}</p>
       </div>
