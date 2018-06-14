@@ -7,10 +7,9 @@ export class Readout extends Component {
     this.state = {
       calculationComplete: false,
       payPeriod: 0,
-      grossIncome: '',
-      incomeTax: '',
-      netIncome: '',
-      superAmount: ''
+      grossIncome: 0,
+      incomeTax: 0,
+      superAmount: 0
     }
   }
   //Note: this assumes pay can be prorated, 
@@ -117,7 +116,8 @@ export class Readout extends Component {
   }
   grossCalculator = () => {
     const state = this.state;
-    state.grossIncome = (this.props.annualSalary * state.payPeriod/12).toFixed(2);
+    console.log(this.props.annualSalary);
+    state.grossIncome = parseFloat((this.props.annualSalary * state.payPeriod/12).toFixed(2));
     this.setState(state);
     console.log(this.state.grossIncome);
   }
@@ -129,39 +129,44 @@ export class Readout extends Component {
       this.setState(state);
     } else if (salary < 37001){
       const taxableSalary = salary - 18200;
-      state.incomeTax = (taxableSalary * 0.19 * state.payPeriod/12).toFixed(2);
+      state.incomeTax = parseFloat((taxableSalary * 0.19 * state.payPeriod/12).toFixed(2));
       this.setState(state);
     } else if (salary < 87001){
       const taxableSalary = salary - 37000;
-      state.incomeTax = ((3572 + taxableSalary * 0.325) * state.payPeriod/12).toFixed(2);
+      state.incomeTax = parseFloat(((3572 + taxableSalary * 0.325) * state.payPeriod/12).toFixed(2));
       this.setState(state);
       console.log(this.state.incomeTax);
     } else if (salary < 180001){
       const taxableSalary = salary - 87000;
-      state.incomeTax = ((19822 + taxableSalary * 0.37) * state.payPeriod/12).toFixed(2);
+      state.incomeTax = parseFloat(((19822 + taxableSalary * 0.37) * state.payPeriod/12).toFixed(2));
       this.setState(state);
     } else {
       const taxableSalary = salary - 180000;
-      state.incomeTax = ((54232 + taxableSalary * 0.45) * state.payPeriod/12).toFixed(2);
+      state.incomeTax = parseFloat(((54232 + taxableSalary * 0.45) * state.payPeriod/12).toFixed(2));
       this.setState(state);
     }
+  }
+  superannuationCalculator = () => {
+    const state = this.state;
+    state.superAmount = parseFloat((state.grossIncome * this.props.superannuationRate).toFixed(2));
+    this.setState(state);
+  }
+  calculatePayStub = () => {
+    this.payPeriodLength();
+    this.grossCalculator();
+    this.incomeTaxCalculator();
+    this.superannuationCalculator();
+    const state = this.state;
+    state.calculationComplete = true;
+    this.setState(state);
+    console.log(this.state);
   }
   render() {
     let paystubData = this.state.payPeriod;
     return (
       <div className="read-container">
-        <button onClick={this.payPeriodLength}>
-        Pay Period
-        </button>
-        <br/>
-        <br/>
-        <button onClick={this.grossCalculator}>
-        Calculate Gross Income
-        </button>
-        <br/>
-        <br/>
-        <button onClick={this.incomeTaxCalculator}>
-        Calculate Tax
+        <button onClick={this.calculatePayStub}>
+        Complete Calculation
         </button>
         <p>{paystubData}</p>
       </div>
