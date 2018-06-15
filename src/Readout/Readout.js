@@ -5,16 +5,13 @@ export class Readout extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      calculationComplete: false,
+      confirmationComplete: false,
       payPeriod: 0,
       grossIncome: 0,
       incomeTax: 0,
       superAmount: 0
     }
   }
-  //Note: this assumes pay can be prorated, 
-  //and that a person receives an equal portion of their monthly pay
-  //each day of the month
   payPeriodLength = () => {
     let monthLength = 0;
     let carryoverDays = 0;
@@ -80,7 +77,6 @@ export class Readout extends Component {
       window.alert("Error: Please ensure your start and end dates are correct.")
     }
     //Calculations start here
-    //Assuming that all pay periods are inclusive of start and end days
     //Calculation if pay period is within one calendar month
     console.log(paymentStartArray[1]);
     console.log(paymentEndArray[1]);
@@ -157,19 +153,40 @@ export class Readout extends Component {
     this.incomeTaxCalculator();
     this.superannuationCalculator();
     const state = this.state;
-    state.calculationComplete = true;
+    state.confirmationComplete = true;
     this.setState(state);
     console.log(this.state);
   }
   render() {
-    let paystubData = this.state.payPeriod;
+    let superPercent = this.props.superannuationRate * 100 + '%';
+    let netIncome = parseFloat((this.state.grossIncome - this.state.incomeTax).toFixed(2));
     return (
-      <div className="read-container">
-        <button onClick={this.calculatePayStub}>
-        Complete Calculation
-        </button>
-        <p>{paystubData}</p>
-      </div>
+    <div>
+      {this.state.confirmationComplete ?
+        <div className="read-container">
+          <p>Name: {this.props.firstName} {this.props.lastName}</p>
+          <p>Pay Period: {this.props.paymentStartDate} to {this.props.paymentEndDate}</p>
+          <p>Gross Income: ${this.state.grossIncome}</p>
+          <p>Income Tax: ${this.state.incomeTax}</p>
+          <p>Net Income: ${netIncome}</p>
+          <p>Super Amount: ${this.state.superAmount}</p>
+        </div>
+      :
+        <div className="read-container">
+          <h3>Is This Information Correct?</h3>
+          <p>Selected Employee: {this.props.firstName} {this.props.lastName}</p>
+          <p>Annual Salary: ${this.props.annualSalary}</p>
+          <p>Pay Period: {this.props.paymentStartDate} to {this.props.paymentEndDate}</p>
+          <p>Superannuation Rate: {superPercent}</p>
+          <button id="confirmationButton" onClick={this.calculatePayStub}>
+          Yes
+          </button>
+          <button onClick={this.props.fullReset}>
+          No
+          </button>
+        </div>      
+      }
+    </div>
     );
   }
 }

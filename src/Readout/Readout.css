@@ -1,6 +1,16 @@
+.overall {
+	height: 80vh;
+	border: black 2px solid;
+}
+
 .read-container {
 	clear: left;
 	float: left;
 	width: 100% !important;
 	background: linear-gradient(to right, white, gray);
+	height: 70vh;
+}
+
+#confirmationButton {
+	margin-right: 30px;
 }

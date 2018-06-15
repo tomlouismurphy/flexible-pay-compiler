@@ -7,10 +7,10 @@ class App extends Component {
     return (
       <div className="container">
         <header className="main-header">
-          <h1 className="classification">Payslip Generator - Australian-Based Employee</h1>
+          <h1 className="classification">Payslip Generator - Australian-Based Employees</h1>
         </header>
         <p className="instruction-text">
-          Please write the relevant info in the form below and we will generate a payment form for your employee.
+          Please enter the relevant info in the form below and we will generate a payment form for your employee.
         </p>
         <EmployeeForm />
       </div>

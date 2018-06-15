@@ -1,6 +1,6 @@
-what I need to solve for pay period calculation
+Re: Assumptions
 
--different lengths of months
--leap years
--pay periods in different years
--pay periods in different months
+For purposes of this assignment, I assume it was possible to prorate salaries, so that employees could receive a paycheck for a period that spanned more than one month, or a subset of days within one calendar month that was shorter than the month itself.
+
+I also assume that all pay periods are inclusive of the start and end date - for instance, a pay period beginning on June 1st and ending on June 15th will have the employee paid for worked performed on the 1st as well as on the 15th.
+

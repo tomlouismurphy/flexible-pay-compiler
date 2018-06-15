@@ -11,7 +11,8 @@ export class EmployeeForm extends Component {
       annualSalary: 0,
       superannuationRate: 0,
       paymentStartDate: '',
-      paymentEndDate: ''
+      paymentEndDate: '',
+      calculationComplete: false
     }
   }
   handleInput = (e) => {
@@ -22,11 +23,15 @@ export class EmployeeForm extends Component {
   }
   handleSubmit = (e) => {
     e.preventDefault();
+    const state = this.state;
     this.salaryConvert(this.state.annualSalary);
     this.superConvert(this.state.superannuationRate);
     console.log(this.state);
-    if (this.state.firstName == false || this.state.lastName == false || this.state.annualSalary == false || this.state.superannuationRate == false || this.state.paymentStateDate == false || this.state.paymentEndDate == false){
+    if (this.state.firstName == false || this.state.lastName == false || this.state.annualSalary == false || this.state.superannuationRate == false || this.state.paymentStartDate == false || this.state.paymentEndDate == false){
       window.alert("Error: At least one item has an improper value.")
+    } else {
+      state.calculationComplete = true;
+      this.setState(state);
     }
   }
   //below function rounds annual salary to nearest whole number
@@ -51,34 +56,52 @@ export class EmployeeForm extends Component {
     state.superannuationRate = superRate;
     this.setState(state);
   }
+  fullReset = () => {
+    const state = this.state;
+    state.firstName = '';
+    state.lastName = '';
+    state.annualSalary = 0;
+    state.superannuationRate = 0;
+    state.paymentStartDate = '';
+    state.paymentEndDate = '';
+    state.calculationComplete = false;
+    this.setState(state);
+  }
   render() {
     return (
-      <div className="overall">
-        <div className="formContainer">
-          <form className="payslipInformation">
-            <label className="payslipTidbit" id="firstPositionTidbit">First Name:</label>
-            <input className="inputBox" id="firstPositionInput" type="text" name="firstName" onChange={this.handleInput}/>
-            <br/>
-            <label className="payslipTidbit">Last Name:</label>
-            <input className="inputBox" type="text" name="lastName" onChange={this.handleInput}/>
-            <br/>
-            <label className="payslipTidbit">Annual Salary:</label>
-            <input className="inputBox" type="number" name="annualSalary" onChange={this.handleInput}/>
-            <br/>
-            <label className="payslipTidbit">Super Rate:</label>
-            <input className="inputBox" type="number" name="superannuationRate" onChange={this.handleInput}/>
-            <br/>
-            <label className="payslipTidbit">Pay Period Start:</label>
-            <input className="inputBox" type="date" name="paymentStartDate" onChange={this.handleInput}/>
-            <br/>
-            <label className="payslipTidbit">Pay Period End:</label>
-            <input className="inputBox" type="date" name="paymentEndDate" onChange={this.handleInput}/>
-            <br/>
-            <button className="submitButton" onClick={this.handleSubmit}>Submit</button>
-          </form>
-        </div>
-      <Readout firstName={this.state.firstName} lastName={this.state.lastName} annualSalary={this.state.annualSalary} superannuationRate={this.state.superannuationRate} paymentStartDate={this.state.paymentStartDate} paymentEndDate={this.state.paymentEndDate}/>
-    </div>
+      <div>
+        {this.state.calculationComplete ?
+          <div className="overall">
+            <Readout firstName={this.state.firstName} lastName={this.state.lastName} annualSalary={this.state.annualSalary} superannuationRate={this.state.superannuationRate} paymentStartDate={this.state.paymentStartDate} paymentEndDate={this.state.paymentEndDate} fullReset={this.fullReset}/>
+          </div>
+        :
+          <div className="overall">
+            <div className="formContainer">
+              <form className="payslipInformation">
+                <label className="payslipTidbit" id="firstPositionTidbit">First Name:</label>
+                <input className="inputBox" id="firstPositionInput" type="text" name="firstName" onChange={this.handleInput}/>
+                <br/>
+                <label className="payslipTidbit">Last Name:</label>
+                <input className="inputBox" type="text" name="lastName" onChange={this.handleInput}/>
+                <br/>
+                <label className="payslipTidbit">Annual Salary:</label>
+                <input className="inputBox" type="number" name="annualSalary" onChange={this.handleInput}/>
+                <br/>
+                <label className="payslipTidbit">Super Rate:</label>
+                <input className="inputBox" type="number" name="superannuationRate" onChange={this.handleInput}/>
+                <br/>
+                <label className="payslipTidbit">Pay Period Start:</label>
+                <input className="inputBox" type="date" name="paymentStartDate" onChange={this.handleInput}/>
+                <br/>
+                <label className="payslipTidbit">Pay Period End:</label>
+                <input className="inputBox" type="date" name="paymentEndDate" onChange={this.handleInput}/>
+                <br/>
+                <button className="submitButton" onClick={this.handleSubmit}>Submit</button>
+              </form>
+            </div>
+          </div>
+        }
+      </div>  
     );
   }
 }
