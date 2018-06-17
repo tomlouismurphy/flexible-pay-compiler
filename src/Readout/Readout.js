@@ -9,7 +9,9 @@ export class Readout extends Component {
       payPeriod: 0,
       grossIncome: 0,
       incomeTax: 0,
-      superAmount: 0
+      superAmount: 0,
+      paymentStartDate: '',
+      paymentEndDate: ''
     }
   }
   payPeriodLength = () => {
@@ -147,11 +149,74 @@ export class Readout extends Component {
     state.superAmount = parseFloat((state.grossIncome * this.props.superannuationRate).toFixed(2));
     this.setState(state);
   }
+  dateConversion = (x, y) => {
+    let xArray = x.split('-');
+    if (xArray[1] === "01"){
+      xArray[1] = 'January';
+    } else if (xArray[1] === "02"){
+      xArray[1] = "February";
+    } else if (xArray[1] === "03"){
+      xArray[1] = "March";
+    } else if (xArray[1] === "04"){
+      xArray[1] = "April";
+    } else if (xArray[1] === "05"){
+      xArray[1] = "May";
+    } else if (xArray[1] === "06"){
+      xArray[1] = "June";
+    } else if (xArray[1] === "07"){
+      xArray[1] = "July";
+    } else if (xArray[1] === "08"){
+      xArray[1] = "August";
+    } else if (xArray[1] === "09"){
+      xArray[1] = "September";
+    } else if (xArray[1] === "10"){
+      xArray[1] = "October";
+    } else if (xArray[1] === "11"){
+      xArray[1] = "November";
+    } else if (xArray[1] === "12"){
+      xArray[1] = "December";
+    } else {
+      ;
+    }
+  let yArray = y.split('-');
+    if (yArray[1] === "01"){
+      yArray[1] = 'January';
+    } else if (yArray[1] === "02"){
+      yArray[1] = "February";
+    } else if (yArray[1] === "03"){
+      yArray[1] = "March";
+    } else if (yArray[1] === "04"){
+      yArray[1] = "April";
+    } else if (yArray[1] === "05"){
+      yArray[1] = "May";
+    } else if (yArray[1] === "06"){
+      yArray[1] = "June";
+    } else if (yArray[1] === "07"){
+      yArray[1] = "July";
+    } else if (yArray[1] === "08"){
+      yArray[1] = "August";
+    } else if (yArray[1] === "09"){
+      yArray[1] = "September";
+    } else if (yArray[1] === "10"){
+      yArray[1] = "October";
+    } else if (yArray[1] === "11"){
+      yArray[1] = "November";
+    } else if (yArray[1] === "12"){
+      yArray[1] = "December";
+    } else {
+      ;
+    }
+    const state = this.state;
+    state.paymentStartDate = xArray[1] + ' ' + xArray[2] + ', ' + xArray[0];
+    state.paymentEndDate = yArray[1] + ' ' + yArray[2] + ', ' + yArray[0];
+    this.setState(state);
+  }
   calculatePayStub = () => {
     this.payPeriodLength();
     this.grossCalculator();
     this.incomeTaxCalculator();
     this.superannuationCalculator();
+    this.dateConversion(this.props.paymentStartDate, this.props.paymentEndDate);
     const state = this.state;
     state.confirmationComplete = true;
     this.setState(state);
@@ -163,21 +228,40 @@ export class Readout extends Component {
     return (
     <div>
       {this.state.confirmationComplete ?
-        <div className="read-container">
-          <p>Name: {this.props.firstName} {this.props.lastName}</p>
-          <p>Pay Period: {this.props.paymentStartDate} to {this.props.paymentEndDate}</p>
-          <p>Gross Income: ${this.state.grossIncome}</p>
-          <p>Income Tax: ${this.state.incomeTax}</p>
-          <p>Net Income: ${netIncome}</p>
-          <p>Super Amount: ${this.state.superAmount}</p>
+        <div className="read-container" id="full-paystub">
+          <div className="paystub-topbar">
+            <div className="employee-name">
+              <p>{this.props.firstName} {this.props.lastName}</p>
+            </div>
+            <div className="employee-payperiod">
+              <p>Start: {this.state.paymentStartDate}</p>
+              <p>End: {this.state.paymentEndDate}</p>
+            </div>
+          </div>
+          <br/>
+          <div className="finances-grid">
+            <div className="grid-headings">
+              <p className="heading-one">Gross Income</p>
+              <p className="heading-one">Income Tax</p>
+              <p className="heading-one">Net Income</p>
+              <p className="heading-one">Super Amount</p>
+            </div>
+            <div className="grid-data">
+              <p className="grid-one">${this.state.grossIncome}</p>
+              <p className="grid-one">${this.state.incomeTax}</p>
+              <p className="grid-one">${netIncome}</p>
+              <p className="grid-one">${this.state.superAmount}</p>
+            </div>
+          </div>
         </div>
       :
         <div className="read-container">
-          <h3>Is This Information Correct?</h3>
           <p>Selected Employee: {this.props.firstName} {this.props.lastName}</p>
           <p>Annual Salary: ${this.props.annualSalary}</p>
           <p>Pay Period: {this.props.paymentStartDate} to {this.props.paymentEndDate}</p>
           <p>Superannuation Rate: {superPercent}</p>
+          <br/>
+          <h3>Is This Information Correct?</h3>
           <button id="confirmationButton" onClick={this.calculatePayStub}>
           Yes
           </button>
