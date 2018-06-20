@@ -16,7 +16,7 @@
 }
 
 .paystub-topbar {
-	height: 10vh;
+	height: 12vh;
 }
 
 .employee-name {
@@ -26,6 +26,7 @@
 	font-size: 26px;
 	display: inline-block;
 	float: left;
+	height: 12vh;
 }
 
 .employee-payperiod {
@@ -35,14 +36,17 @@
 	font-size: 18px;
 	float: right;
 	display: inline-block;
+	height: 12vh;
 }
 
 .finances-grid {
-	height: 30vh;
+	height: 26vh;
+	padding-top: 10px;
+	padding-left: 8vw;
 }
 
 .grid-headings {
-	height: 12vh;
+	height: 8vh;
 }
 
 .heading-one {
@@ -50,13 +54,17 @@
 	border: 1px solid black;
 	float: left;
 	display: inline-block;
-	height: 12vh;
+	height: 4vh;
 	margin: 0 auto;
-	vertical-align: middle;
+	padding: 4vh 0;
+	font-weight: bold;
+	color: white;
+	background-color: #444444;
 }
 
 .grid-data {
 	height: 12vh;
+	padding: 1% 0;
 }
 
 .grid-one {
@@ -64,9 +72,10 @@
 	border: 1px solid black;
 	float: left;
 	display: inline-block;
-	height: 12vh;
+	height: 6vh;
 	margin: 0 auto;
 	vertical-align: middle;
+	padding: 6vh 0;
 }
 
 #full-paystub {
