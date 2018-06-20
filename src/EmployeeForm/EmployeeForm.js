@@ -28,7 +28,7 @@ export class EmployeeForm extends Component {
     this.superConvert(this.state.superannuationRate);
     console.log(this.state);
     if (this.state.firstName == false || this.state.lastName == false || this.state.annualSalary == false || this.state.superannuationRate == false || this.state.paymentStartDate == false || this.state.paymentEndDate == false){
-      window.alert("Error: At least one item has an improper value.")
+      window.alert("Error: At least one item has an improper value.");
     } else {
       state.calculationComplete = true;
       this.setState(state);
